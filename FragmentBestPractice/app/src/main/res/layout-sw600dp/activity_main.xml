@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 这个是新闻标题 碎片-->
+
+    <fragment
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:name="activitytest.example.com.fragmentbestpractice.NewsTitleFragment"
+        android:id="@+id/news_title_fragment"/>
+
+
+
+    <!--这个是新闻内容  碎片-->
+    <!-- 专门把碎片放标签里是为了进行单屏和双屏判断的时候有东西可拿，而碎片有自己的标签又不能乱动吧 -->
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:id="@+id/news_content_layout"
+        >
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/news_content_fragment"
+            android:name="activitytest.example.com.fragmentbestpractice.NewsContentFragment"
+            />
+    </FrameLayout>
+
+
+
+
+
+</LinearLayout>
