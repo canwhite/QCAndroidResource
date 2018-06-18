@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!--这个是控件相对于父类的布局  -->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:id="@+id/button1"-->
+        <!--android:text="Button 1"-->
+        <!--/>-->
+
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:id="@+id/button2"-->
+        <!--android:text="Button 2"-->
+        <!--/>-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:id="@+id/button3"-->
+        <!--android:text="Button 3"-->
+
+        <!--/>-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/button4"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:text="Button4"-->
+
+        <!--/>-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/button5"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:text="Button 5"-->
+
+        <!--/>-->
+
+
+
+
+
+
+
+    <!-- 这个是控件之间的相对布局 -->
+    <!-- 另一种区别于Above和Below的方法，类似于上边的相对于父类布局，是一个控件在另一个控件内的相对布局 -->
+    <!-- layout_alignRight and so on -->
+
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/button3"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:text="Button3"-->
+        <!--/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/button1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@+id/button3"-->
+        <!--android:layout_toLeftOf="@+id/button3"-->
+        <!--android:text="Button 1"-->
+        <!--/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/button2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@+id/button3"-->
+        <!--android:layout_toRightOf="@+id/button3"-->
+        <!--android:text="Button 2"-->
+        <!--/>-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+
+        <!--android:layout_toLeftOf="@+id/button3"-->
+        <!--android:layout_below="@+id/button3"-->
+        <!--android:text="Button 4"-->
+        <!--android:id="@+id/button4"-->
+
+        <!--/>-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/button3"-->
+        <!--android:layout_toRightOf="@+id/button3"-->
+        <!--android:id="@+id/button5"-->
+        <!--android:text="Button 5"-->
+        <!--/>-->
+
+
+
+
+
+
+
+
+    <!-- 帧布局  需要改动布局主标签为FrameLayout,都在左上角，后边的覆盖前边的 -->
+
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/text_view"-->
+        <!--android:layout_gravity="left"-->
+        <!--android:text="This is TextView"-->
+        <!--/>-->
+
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/image_view"-->
+        <!--android:src="@drawable/img_1"-->
+        <!--android:layout_gravity="right"-->
+
+
+        <!--/>-->
+
+
+
+
+    <!-- 百分比布局 分为帧布局和相对布局两种 本次测试用的是帧百分比布局-->
+    <!-- 在build.gradle中添加了三方架包 在这里完成了使用-->
+
+    <Button
+
+        android:id="@+id/button1"
+        android:text="Button 1"
+        android:layout_gravity="left|top"
+        app:layout_widthPercent = "50%"
+        app:layout_heightPercent = "50%"
+
+        />
+    <Button
+
+        android:id="@+id/button2"
+        android:text="Button 2"
+        android:layout_gravity="right|top"
+        app:layout_widthPercent = "50%"
+        app:layout_heightPercent = "50%"
+
+        />
+
+    <Button
+
+        android:id="@+id/button3"
+        android:text="Button 3"
+        android:layout_gravity="left|bottom"
+        app:layout_widthPercent = "50%"
+        app:layout_heightPercent = "50%"
+
+        />
+
+
+
+    <Button
+        android:id="@+id/button4"
+        android:text="Button 4"
+        android:layout_gravity="right|bottom"
+        app:layout_widthPercent = "50%"
+        app:layout_heightPercent = "50%"
+
+        />
+
+</android.support.percent.PercentFrameLayout>

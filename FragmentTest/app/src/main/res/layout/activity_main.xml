@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+
+    <!--<fragment-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:id="@+id/left_fragment"-->
+        <!--android:name="activitytest.example.com.fragmenttest.LeftFragment"-->
+        <!--/>-->
+
+    <!--<fragment-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:name="activitytest.example.com.fragmenttest.RightFragment"-->
+        <!--android:id="@+id/right_fragment"-->
+        <!--/>-->
+
+
+    <!--<FrameLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:id="@+id/right_layout"-->
+
+        <!--/>-->
+
+
+    <!-- 动态添加布局 -->
+    <fragment
+        android:name="activitytest.example.com.fragmenttest.LeftFragment"
+        android:id="@+id/left_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+
+
+    </fragment>
+
+
+
+
+
+
+</LinearLayout>
