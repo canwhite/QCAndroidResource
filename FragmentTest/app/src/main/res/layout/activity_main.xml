@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
 
@@ -35,18 +35,73 @@
 
 
     <!-- 动态添加布局 -->
-    <fragment
-        android:name="activitytest.example.com.fragmenttest.LeftFragment"
-        android:id="@+id/left_fragment"
+    <!--<fragment-->
+        <!--android:name="activitytest.example.com.fragmenttest.LeftFragment"-->
+        <!--android:id="@+id/left_fragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--&gt;-->
+    <!--</fragment>-->
+    <!---->
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/containner"
+        android:layout_weight="1"
+        tools:ignore="Suspicious0dp">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/totalLine"
+
         >
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/btnContainner1"
+            android:orientation="horizontal"
+            tools:ignore="Suspicious0dp">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="First"
+                android:id="@+id/btn1"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnContainner2"
+            android:orientation="horizontal"
+            tools:ignore="Suspicious0dp">
 
 
 
-    </fragment>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn2"
+                android:text="Second"
 
+                />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 
 
