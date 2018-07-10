@@ -112,6 +112,8 @@ public class DownloadTask extends AsyncTask<String,Integer,Integer> {
                     }else if (isPaused){
 
                         return TYPE_PAUSED;
+
+
                     }else{
 
                         total += len;
@@ -153,8 +155,6 @@ public class DownloadTask extends AsyncTask<String,Integer,Integer> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
 
 
@@ -162,7 +162,7 @@ public class DownloadTask extends AsyncTask<String,Integer,Integer> {
     }
 
 
-    //publishProgress(progress)调用的时候，这个方法会被连带调用
+    //针对doInBackground的返回结果，直接相对应的结果回调
     @Override
     protected void onProgressUpdate(Integer... values) {
 
