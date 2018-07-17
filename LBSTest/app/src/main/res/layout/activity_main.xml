@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="#20a9f2"
+
+
+        >
+    <!--android:background="@drawable/back_bg"-->
+    <Button
+        android:id="@+id/title_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:text="Back"
+        android:textColor="#fff"
+        android:background="#01000000"
+        />
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="到站了"
+        android:textColor="#fff"
+        android:textSize="18sp"
+
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_edit"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:text="更改目的地"
+        android:textColor="#fff"
+        android:background="#01000000"
+
+        />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:orientation="vertical"
+        tools:ignore="Suspicious0dp">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+
+            android:layout_height="match_parent"
+            android:clickable="true"
+
+            android:layout_width="match_parent" />
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4.2"
+        android:orientation="vertical"
+        tools:ignore="Suspicious0dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/position_text_view"
+
+            />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:orientation="vertical"
+        tools:ignore="Suspicious0dp"
+
+        >
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/Stop_Shaking"
+            android:text="Stop Shaking"
+            android:background="#20a9f2"
+            android:textColor="#fff"
+
+            />
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,58 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* ic_launcher-web.png
+* proguard-project.txt
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* assets/ => app/src/main/assets
+* libs/BaiduLBS_Android.jar => app/libs/BaiduLBS_Android.jar
+* libs/armeabi/libBDSpeechDecoder_V1.so => app/src/main/jniLibs/armeabi/libBDSpeechDecoder_V1.so
+* libs/armeabi/libBaiduMapSDK_base_v4_2_0.so => app/src/main/jniLibs/armeabi/libBaiduMapSDK_base_v4_2_0.so
+* libs/armeabi/libBaiduMapSDK_bikenavi_v4_2_0.so => app/src/main/jniLibs/armeabi/libBaiduMapSDK_bikenavi_v4_2_0.so
+* libs/armeabi/libBaiduMapSDK_map_for_bikenavi_v4_2_0.so => app/src/main/jniLibs/armeabi/libBaiduMapSDK_map_for_bikenavi_v4_2_0.so
+* libs/armeabi/libapp_BaiduNaviApplib.so => app/src/main/jniLibs/armeabi/libapp_BaiduNaviApplib.so
+* libs/armeabi/libapp_BaiduPanoramaAppLib.so => app/src/main/jniLibs/armeabi/libapp_BaiduPanoramaAppLib.so
+* libs/armeabi/libapp_BaiduVIlib.so => app/src/main/jniLibs/armeabi/libapp_BaiduVIlib.so
+* libs/armeabi/libaudiomessage-jni.so => app/src/main/jniLibs/armeabi/libaudiomessage-jni.so
+* libs/armeabi/libbd_etts.so => app/src/main/jniLibs/armeabi/libbd_etts.so
+* libs/armeabi/libbds.so => app/src/main/jniLibs/armeabi/libbds.so
+* libs/armeabi/libbdtts.so => app/src/main/jniLibs/armeabi/libbdtts.so
+* libs/armeabi/libcurl.so => app/src/main/jniLibs/armeabi/libcurl.so
+* libs/armeabi/libetts_domain_data_builder.so => app/src/main/jniLibs/armeabi/libetts_domain_data_builder.so
+* libs/armeabi/libgnustl_shared.so => app/src/main/jniLibs/armeabi/libgnustl_shared.so
+* libs/armeabi/liblocSDK7a.so => app/src/main/jniLibs/armeabi/liblocSDK7a.so
+* libs/armeabi/liblocnaviSDK.so => app/src/main/jniLibs/armeabi/liblocnaviSDK.so
+* lint.xml => app/lint.xml
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+* src/.DS_Store => app/src/main/resources/.DS_Store
+* src/com/.DS_Store => app/src/main/resources/com/.DS_Store
+* src/com/baidu/.DS_Store => app/src/main/resources/com/baidu/.DS_Store
+* src/com/baidu/location/.DS_Store => app/src/main/resources/com/baidu/location/.DS_Store
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
