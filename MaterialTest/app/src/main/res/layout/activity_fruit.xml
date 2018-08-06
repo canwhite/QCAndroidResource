@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FruitActivity">
+    tools:context=".FruitActivity"
+    android:fitsSystemWindows="true"
+    >
 
     <!-- 这个是包裹toolbar让它自动回收的控件 -->
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:id="@+id/appBar"
+        android:fitsSystemWindows="true"
         >
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -20,6 +23,8 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
+
             >
 
                 <ImageView
@@ -28,21 +33,19 @@
                     android:id="@+id/fruit_image_view"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
+                    android:fitsSystemWindows="true"
+
+
                     />
 
                 <android.support.v7.widget.Toolbar
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
+                    android:id="@+id/toolbar"
                     >
 
                 </android.support.v7.widget.Toolbar>
-
-
-
-
-
-
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -51,17 +54,53 @@
     </android.support.design.widget.AppBarLayout>
 
 
-
+    <!-- 注意NestedScrollView 和appBarLayout是平级的  -->
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
-
         >
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <!-- 使用textView来显示苹果的内容详情 并将textView放到一个卡片布局里边 -->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="35dp"
+                app:cardCornerRadius="4dp"
+                >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fruit_content_text"
+                    android:layout_margin="10dp"
+                    />
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+
+    <!-- 再在同级别外加一个悬浮按钮和上边的NestedScrollView和AppBarLayout是同级的 -->
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/touxiang"
+        app:layout_anchor="@id/appBar"
+        app:layout_anchorGravity="bottom|end"
+        />
 
 
 

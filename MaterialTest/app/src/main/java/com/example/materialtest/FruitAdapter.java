@@ -1,6 +1,7 @@
 package com.example.materialtest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -54,9 +55,36 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> 
         if (mContext == null){
             mContext = parent.getContext();
         }
-        //通过父类活动绑定cardView
+        //通过父类活动绑item布局，得到view
         View view = LayoutInflater.from(mContext).inflate(R.layout.fruit_item,parent,false);
-        return  new ViewHolder(view);
+        //view赋值给viewHolder类好拿到控件
+        final ViewHolder holder = new ViewHolder(view);
+
+        //拿到cardView控件,对控件添加点击操作
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //得到点击的位置,
+                int position = holder.getAdapterPosition();
+                Fruit fruit = mFruitList.get(position);
+                Intent intent = new Intent(mContext,FruitActivity.class);
+
+                //第一个参数是标号，第二个参数是内容
+                intent.putExtra(FruitActivity.FRUIT_NAME,fruit.getName());
+                intent.putExtra(FruitActivity.FRUIT_IMAGE_ID,fruit.getImageId());
+
+                mContext.startActivity(intent);
+
+            }
+        });
+        return  holder;
+
+
+
+
+
+        //return  new ViewHolder(view);
 
     }
     //cell for row
