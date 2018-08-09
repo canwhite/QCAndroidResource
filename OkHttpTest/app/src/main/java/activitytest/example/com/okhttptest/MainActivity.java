@@ -251,10 +251,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-
-
-
-
     }
 
 
@@ -277,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             jsonObject.getJSONObject();
             jsonObject.getString()
             */
+
 
 
             JSONObject jsonObject = new JSONObject(jsonData);

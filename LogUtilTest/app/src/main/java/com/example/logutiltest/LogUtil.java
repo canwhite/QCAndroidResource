@@ -11,7 +11,7 @@ public class LogUtil {
     public  static  final  int ERROR = 5;
     public  static  final  int NOTHING = 6;
 
-    //如果上架的时候不想要结果显示，可以把等级调到最高,即NOTHING
+    //如果上架的时候不想要结果显示，可以把等级调到最高,即NOTHING，就不会把日志信息暴露出来了
     public  static  final  int level = VERBOSE;
 
 
