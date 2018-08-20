@@ -49,8 +49,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         transaction.replace(R.id.containner, fragment);
 
 
-//        //在碎片中模拟返回栈
-//        transaction.addToBackStack(null);
+        //在碎片中模拟返回栈
+        //transaction.addToBackStack(null);
 
         //对事务进行提交
         transaction.commit();

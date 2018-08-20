@@ -39,10 +39,8 @@ public class Utility {
                     JSONObject provinceObject = allProvinces.getJSONObject(i);
                     //new 一个db省份类
                     Province province = new Province();
-
                     province.setProvinceName(provinceObject.getString("name"));
                     province.setProvinceCode(provinceObject.getInt("id"));
-
                     province.save();
 
                 }
@@ -54,8 +52,6 @@ public class Utility {
                 e.printStackTrace();
             }
 
-
-
         }
 
 
@@ -63,9 +59,6 @@ public class Utility {
         return  false;
 
     }
-
-
-
 
 
     /*
@@ -123,8 +116,6 @@ public class Utility {
 
         if (!TextUtils.isEmpty(response)){
 
-
-
             try {
                 JSONArray allCounties = new JSONArray(response);
                 for (int i = 0; i < allCounties.length(); i++) {
@@ -135,7 +126,6 @@ public class Utility {
                     county.setCountyName(countyObject.getString("name"));
                     county.setWeatherId(countyObject.getString("weather_id"));
                     county.save();
-
 
                 }
 
@@ -149,7 +139,6 @@ public class Utility {
 
         return false;
     }
-
 
 
 
