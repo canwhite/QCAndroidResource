@@ -13,6 +13,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/*
+
+    这个类对请求结果进行处理
+
+
+ */
+
+
 public class Utility {
 
 
