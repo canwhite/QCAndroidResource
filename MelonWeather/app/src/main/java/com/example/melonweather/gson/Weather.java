@@ -19,9 +19,11 @@ public class Weather {
 
     public Suggestion suggestion;
 
-
-
     //针对数组字典
     @SerializedName("daily_forecast") public List<Forecast> forecastList;
+
+
+    
+
 
 }
