@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.example.melonweather.db.City;
 import com.example.melonweather.db.County;
 import com.example.melonweather.db.Province;
+import com.example.melonweather.gson.Weather;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
@@ -147,6 +149,39 @@ public class Utility {
 
         return false;
     }
+
+
+
+    /*
+        将返回Json数据解析成weather实体类
+
+     */
+
+    public  static Weather handleWeatherResponse(String response){
+
+
+        try{
+
+            JSONObject jsonObject = new JSONObject(response);
+            //然后得到heweather数组，我们这个数组里边只有一个元素
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            //得到数组中的首元素，转化成字符串
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            return  new Gson().fromJson(weatherContent,Weather.class);
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+
+        }
+        return  null;
+    }
+
+
+
+
+
+
 
 
 
