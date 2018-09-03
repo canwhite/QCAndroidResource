@@ -4,13 +4,23 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.melonweather.gson.Forecast;
 import com.example.melonweather.gson.Weather;
+import com.example.melonweather.util.HttpUtil;
 import com.example.melonweather.util.Utility;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class WeatherActivity extends AppCompatActivity {
 
@@ -67,6 +77,7 @@ public class WeatherActivity extends AppCompatActivity {
             //weatherLayout先显示不可见
             weatherLayout.setVisibility(View.INVISIBLE);
             //去请求数据吧
+            requestWeather(weatherId);
 
         }
 
@@ -77,8 +88,62 @@ public class WeatherActivity extends AppCompatActivity {
      */
 
     public void requestWeather(final String weatherId){
+        String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId + "&key=f0c2b6dc7a82406facae0a3bec2874df";
+        HttpUtil.sendOKHttpRequest(weatherUrl, new Callback() {
 
-        
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                final String responseText = response.body().string();
+                //这个是存储
+                final Weather weather = Utility.handleWeatherResponse(responseText);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        //如果weather有数据了
+                        if (weather != null && "ok".equals(weather.status)){
+                            //缓存存一下
+                            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
+                            editor.putString("weather",responseText);
+                            editor.apply();
+                            showWeatherInfo(weather);
+
+
+                        }else{
+                            //提示失败
+                            Toast.makeText(WeatherActivity.this,"获取天气信息失败",Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    }
+                });
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+                e.printStackTrace();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Toast.makeText(WeatherActivity.this,"获取天气信息失败",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+
+
+            }
+
+
+        });
 
     }
 
@@ -88,6 +153,39 @@ public class WeatherActivity extends AppCompatActivity {
      */
 
     public void  showWeatherInfo(Weather weather){
+
+        //通过weather从各个model里拿数据
+        String cityName = weather.basic.cityName;
+        String updateTime = weather.basic.update.updateTime.split(" ")[1];
+        String degree = weather.now.temperature + "℃";
+        String weatherInfo = weather.now.more.info;
+
+        //设置上边几个
+        titleCity.setText(cityName);
+        titleUpdateTime.setText(updateTime);
+        degreeText.setText(degree);
+        weatherInfoText.setText(weatherInfo);
+
+        //移除forecastLayout上边的所有控件
+        for (Forecast forecast : weather.forecastList){
+
+            //子视图添加
+            View view = LayoutInflater.from(this).inflate(R.layout.forecast_item,forecastLayout,false);
+            //从item视图拿到小控件
+            TextView dateText = (TextView)view.findViewById(R.id.date_text);
+            TextView infoText = (TextView)view.findViewById(R.id.info_text);
+            
+
+
+
+        }
+
+
+
+
+
+
+
 
 
 
