@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.melonweather.gson.Forecast;
 import com.example.melonweather.gson.Weather;
 import com.example.melonweather.util.HttpUtil;
@@ -41,6 +43,7 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView carWashText;
     private TextView sportText;
 
+    private ImageView bingPicImg;
 
 
     @Override
@@ -60,6 +63,10 @@ public class WeatherActivity extends AppCompatActivity {
         comfortText = (TextView)findViewById(R.id.comfot_text);
         carWashText = (TextView)findViewById(R.id.car_wash_text);
         sportText = (TextView)findViewById(R.id.sport_text);
+        //初始化背景图控件
+        bingPicImg = (ImageView)findViewById(R.id.bing_pic_img);
+
+
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = pref.getString("weather",null);
@@ -67,7 +74,8 @@ public class WeatherActivity extends AppCompatActivity {
 
             //有缓存时直接解析天气数据
             Weather weather = Utility.handleWeatherResponse(weatherString);
-            //显示天气信息
+            //显示天气信息;
+            showWeatherInfo(weather);
 
 
         }else{
@@ -78,6 +86,21 @@ public class WeatherActivity extends AppCompatActivity {
             weatherLayout.setVisibility(View.INVISIBLE);
             //去请求数据吧
             requestWeather(weatherId);
+
+        }
+
+
+
+        //判断背景图是不是已经存储过了
+        String bingPic = pref.getString("bing_pic",null);
+        //如果不为空使用glide设置背景图
+        if (bingPic != null){
+
+            Glide.with(this).load(bingPic).into(bingPicImg);
+        }else{
+
+            //去请求每日一图
+            loadBingPic();
 
         }
 
@@ -167,22 +190,94 @@ public class WeatherActivity extends AppCompatActivity {
         weatherInfoText.setText(weatherInfo);
 
         //移除forecastLayout上边的所有控件
+        forecastLayout.removeAllViews();
+
+        /*
+
+            通过for循环添加forecast，注意android和ios的区别
+            android只要设置好vir他就会竖向自动往下加
+
+         */
+
         for (Forecast forecast : weather.forecastList){
 
-            //子视图添加
+            //联系子视图的方法
             View view = LayoutInflater.from(this).inflate(R.layout.forecast_item,forecastLayout,false);
             //从item视图拿到小控件
             TextView dateText = (TextView)view.findViewById(R.id.date_text);
             TextView infoText = (TextView)view.findViewById(R.id.info_text);
-            
+            TextView maxText = (TextView)view.findViewById(R.id.max_text);
+            TextView minText = (TextView)view.findViewById(R.id.min_text);
 
+            //给这些小控件赋值
+            dateText.setText(forecast.date);
+            infoText.setText(forecast.more.info);
+            maxText.setText(forecast.temperature.max);
+            minText.setText(forecast.temperature.min);
 
+            forecastLayout.addView(view);
 
         }
 
+        if (weather.aqi != null){
+            aqiText.setText(weather.aqi.city.aqi);
+            pm25Text.setText(weather.aqi.city.pm25);
+
+        }
+
+        String comfort = "舒适度：" + weather.suggestion.comfort.info;
+        String carWash = "洗车指数" + weather.suggestion.carWash.info;
+        String sport = "运动建议" + weather.suggestion.sport.info;
+
+        comfortText.setText(comfort);
+        carWashText.setText(carWash);
+        sportText.setText(sport);
+
+        weatherLayout.setVisibility(View.VISIBLE);
+
+
+    }
+
+    /*
+        加载必应每日一图
+
+     */
+
+    private void  loadBingPic(){
+
+
+        String requestBingPic = "http://guolin.tech/api/bing_pic";
+        HttpUtil.sendOKHttpRequest(requestBingPic, new Callback() {
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String bingPic = response.body().string();
+                //拿到编辑器
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
+                editor.putString("bing_pic",bingPic);
+                editor.apply();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Glide.with(WeatherActivity.this).load(bingPic).into(bingPicImg);
+
+
+                    }
+                });
 
 
 
+            }
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+                e.printStackTrace();
+
+            }
+
+        });
 
 
 
@@ -191,6 +286,8 @@ public class WeatherActivity extends AppCompatActivity {
 
 
     }
+
+
 
 
 

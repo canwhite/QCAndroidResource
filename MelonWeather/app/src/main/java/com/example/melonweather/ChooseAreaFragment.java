@@ -2,6 +2,7 @@ package com.example.melonweather;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -138,7 +139,19 @@ public class ChooseAreaFragment extends Fragment {
                     //接下来查询县
                     queryCounties();
 
+                }else if (currentLevel == LEVEL_CONTY){
+
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(getActivity(),WeatherActivity.class);
+                    intent.putExtra("weather_id",weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
+
                 }
+
+
+
+
 
 
             }
