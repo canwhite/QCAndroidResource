@@ -141,18 +141,38 @@ public class ChooseAreaFragment extends Fragment {
 
                 }else if (currentLevel == LEVEL_CONTY){
 
+                    //weatherId是通用的
                     String weatherId = countyList.get(position).getWeatherId();
-                    Intent intent = new Intent(getActivity(),WeatherActivity.class);
-                    intent.putExtra("weather_id",weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
 
+
+
+
+
+
+                    //需要判断一下是不是已经在主活动了
+                    //如果是主活动就进行正常的跳转，如果不是主活动，就只是更新数据，刷新页面了
+                    if (getActivity() instanceof MainActivity){
+
+                        Intent intent = new Intent(getActivity(),WeatherActivity.class);
+                        intent.putExtra("weather_id",weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+
+
+                    }else if (getActivity() instanceof  WeatherActivity){
+
+                        //活动也可以像view通过tag获取一样，通过getActivity强制获得
+                        WeatherActivity activity = (WeatherActivity)getActivity();
+                        activity.drawerLayout.closeDrawers();//如果到请求数据这一层了，就关闭抽屉
+                        //设置刷新开始，请求数据，请求数据内部有关闭刷新的方法
+                        activity.swipeRefresh.setRefreshing(true);
+                        activity.requestWeather(weatherId);
+
+
+
+
+                    }
                 }
-
-
-
-
-
 
             }
         });

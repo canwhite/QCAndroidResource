@@ -1,22 +1,32 @@
 package com.example.melonweather;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.bumptech.glide.Glide;
 import com.example.melonweather.gson.Forecast;
 import com.example.melonweather.gson.Weather;
+import com.example.melonweather.service.AutoUpdateService;
 import com.example.melonweather.util.HttpUtil;
 import com.example.melonweather.util.Utility;
+import com.example.melonweather.service.AutoUpdateService;
 
 import java.io.IOException;
 
@@ -45,11 +55,42 @@ public class WeatherActivity extends AppCompatActivity {
 
     private ImageView bingPicImg;
 
+    //在现有视图的最外边加了刷新
+    public SwipeRefreshLayout swipeRefresh;
+
+    //在刷新的外边加个抽屉
+    public DrawerLayout drawerLayout;
+    private Button navButton;
+
+
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //一个简单的背景图和状态栏融合在一起的方法
+        if (Build.VERSION.SDK_INT >= 21){
+            //拿到decorView
+            View decorView = getWindow().getDecorView();
+            //设置系统UI的显示
+            decorView.setSystemUiVisibility(
+                    //活动的布局会显示在状态栏上
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
+            );
+            //trans parent,透明色
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+        }
+        //android:fitsSystemWindows="true",//如果为了头布局不和系统状态栏紧贴，在相关布局的父布局的里边加上fits代码
         setContentView(R.layout.activity_weather);
+
+
+
 
         //初始化各个控件
         weatherLayout = (ScrollView)findViewById(R.id.weather_layout);
@@ -66,14 +107,46 @@ public class WeatherActivity extends AppCompatActivity {
         //初始化背景图控件
         bingPicImg = (ImageView)findViewById(R.id.bing_pic_img);
 
+        //刷新控件
+        swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
+        //从计划内资源中设置颜色
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+
+        //绑一下抽屉控件
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+
+        //左侧的抽屉显示btn
+        navButton = (Button)findViewById(R.id.nav_button);
+
+        navButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //显示抽屉
+
+                drawerLayout.openDrawer(GravityCompat.START);
+
+
+            }
+        });
+
+
+
 
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = pref.getString("weather",null);
+
+        //定义一个weatherid刷新的时候用
+        final String weatherId;
+
+
         if (weatherString != null){
 
             //有缓存时直接解析天气数据
             Weather weather = Utility.handleWeatherResponse(weatherString);
+            //如果有缓存，拿到weatherId
+            weatherId = weather.basic.weatherId;
             //显示天气信息;
             showWeatherInfo(weather);
 
@@ -81,13 +154,21 @@ public class WeatherActivity extends AppCompatActivity {
         }else{
 
             //无缓存从服务器查寻天气,从上一级拿到weather_id
-            String weatherId = getIntent().getStringExtra("weather_id");
+            weatherId = getIntent().getStringExtra("weather_id");
             //weatherLayout先显示不可见
             weatherLayout.setVisibility(View.INVISIBLE);
             //去请求数据吧
             requestWeather(weatherId);
 
         }
+
+        //做刷新
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestWeather(weatherId);
+            }
+        });
 
 
 
@@ -133,13 +214,13 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.apply();
                             showWeatherInfo(weather);
 
-
                         }else{
                             //提示失败
                             Toast.makeText(WeatherActivity.this,"获取天气信息失败",Toast.LENGTH_SHORT).show();
-
-
                         }
+                        //页面加载完成之后要停止刷新
+                        swipeRefresh.setRefreshing(false);
+
                     }
                 });
 
@@ -156,13 +237,11 @@ public class WeatherActivity extends AppCompatActivity {
                     public void run() {
 
                         Toast.makeText(WeatherActivity.this,"获取天气信息失败",Toast.LENGTH_SHORT).show();
+                        //页面加载完成之后要停止刷新
+                        swipeRefresh.setRefreshing(false);
 
                     }
                 });
-
-
-
-
             }
 
 
@@ -236,6 +315,19 @@ public class WeatherActivity extends AppCompatActivity {
         weatherLayout.setVisibility(View.VISIBLE);
 
 
+        if (weather != null && "ok".equals(weather.status)){
+
+            //把服务打开，8个小时之后更新数据
+            Intent intent = new Intent(this,AutoUpdateService.class);
+
+            startService(intent);
+
+
+        }else{
+            //提示失败
+            Toast.makeText(WeatherActivity.this,"获取天气信息失败",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /*
@@ -278,12 +370,6 @@ public class WeatherActivity extends AppCompatActivity {
             }
 
         });
-
-
-
-
-
-
 
     }
 
